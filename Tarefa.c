@@ -1,38 +1,39 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <locale.h>
 
 void adicionar_tarefa() {
     char data[11]; // Considerando o formato DD/MM/AAAA
-    char descricao[100]; // Ajuste o tamanho conforme necessário
+    char descricao[100]; // Ajuste o tamanho conforme necessÃ¡rio
 
-    printf("Digite a data da tarefa (DD/MM/AAAA): ");
+    printf("Digite a data da tarefa (DD/MM/AAAA): \n");
     scanf("%s", data);
     getchar(); // Limpa o buffer do teclado
 
-    printf("Digite a descrição da tarefa: ");
+    printf("Digite a descriÃ§Ã£o da tarefa: \n");
     fgets(descricao, sizeof(descricao), stdin);
 
     FILE *arquivo = fopen("tarefas.txt", "a");
     if (arquivo == NULL) {
-        printf("Erro ao abrir o arquivo.\n");
+        printf("Erro ao abrir o arquivo. \n");
         exit(1);
     }
 
     fprintf(arquivo, "%s: %s\n", data, descricao);
     fclose(arquivo);
 
-    printf("Tarefa adicionada com sucesso!\n");
+    printf("Tarefa adicionada com sucesso! \n");
 }
 
 void mostrar_tarefas_por_data(char *data) {
     FILE *arquivo = fopen("tarefas.txt", "r");
     if (arquivo == NULL) {
-        printf("Erro ao abrir o arquivo.\n");
+        printf("Erro ao abrir o arquivo. \n");
         exit(1);
     }
 
-    char linha[150]; // Ajuste o tamanho conforme necessário
+    char linha[150]; // Ajuste o tamanho conforme necessÃ¡rio
     int encontrou = 0;
 
     while (fgets(linha, sizeof(linha), arquivo)) {
@@ -45,24 +46,24 @@ void mostrar_tarefas_por_data(char *data) {
     fclose(arquivo);
 
     if (!encontrou) {
-        printf("Nenhuma tarefa agendada para a data %s\n", data);
+        printf("Nenhuma tarefa agendada para a data %s \n", data);
     }
 }
 
 void apagar_tarefa_por_data(char *data) {
     FILE *arquivo_leitura = fopen("tarefas.txt", "r");
     if (arquivo_leitura == NULL) {
-        printf("Erro ao abrir o arquivo.\n");
+        printf("Erro ao abrir o arquivo. \n");
         exit(1);
     }
 
     FILE *arquivo_temp = fopen("temp.txt", "w");
     if (arquivo_temp == NULL) {
-        printf("Erro ao abrir o arquivo temporário.\n");
+        printf("Erro ao abrir o arquivo temporÃ¡rio. \n");
         exit(1);
     }
 
-    char linha[150]; // Ajuste o tamanho conforme necessário
+    char linha[150]; // Ajuste o tamanho conforme necessÃ¡rio
     int encontrou = 0;
 
     while (fgets(linha, sizeof(linha), arquivo_leitura)) {
@@ -86,13 +87,14 @@ void apagar_tarefa_por_data(char *data) {
 }
 
 int main() {
+		setlocale(LC_ALL,"Portuguese");
     while (1) {
-        printf("\n=== Sistema de Arquivamento de Tarefas ===\n");
+        printf("=== Sistema de Arquivamento de Tarefas ===\n\n");
         printf("1. Adicionar Tarefa\n");
         printf("2. Verificar Tarefas por Data\n");
         printf("3. Apagar Tarefa por Data\n");
         printf("4. Sair\n");
-        printf("Escolha uma opção: ");
+        printf("Escolha uma opÃ§Ã£o: ");
 
         int escolha;
         scanf("%d", &escolha);
@@ -104,7 +106,7 @@ int main() {
                 break;
             case 2: {
                 char data[11];
-                printf("Digite a data para verificar as tarefas (DD/MM/AAAA): ");
+                printf("Digite a data para verificar as tarefas (DD/MM/AAAA): \n");
                 scanf("%s", data);
                 getchar(); // Limpa o buffer do teclado
                 mostrar_tarefas_por_data(data);
@@ -112,7 +114,7 @@ int main() {
             }
             case 3: {
                 char data[11];
-                printf("Digite a data para apagar as tarefas (DD/MM/AAAA): ");
+                printf("Digite a data para apagar as tarefas (DD/MM/AAAA): \n");
                 scanf("%s", data);
                 getchar(); // Limpa o buffer do teclado
                 apagar_tarefa_por_data(data);
@@ -122,10 +124,9 @@ int main() {
                 printf("Saindo do programa...\n");
                 return 0;
             default:
-                printf("Opção inválida. Por favor, escolha novamente.\n");
+                printf("OpÃ§Ã£o invÃ¡lida. Por favor, escolha novamente.\n");
         }
     }
 
     return 0;
 }
-
